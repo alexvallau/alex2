@@ -1,0 +1,78 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: white;
+          color: black;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+      }
+
+      h1 {
+          color: red;
+          margin-bottom: 20px;
+      }
+
+      form {
+          max-width: 400px;
+          margin: 0 auto;
+      }
+
+      .champ {
+          margin-bottom: 20px;
+          text-align: left;
+      }
+
+      label {
+          display: block;
+          margin-bottom: 5px;
+          color: red;
+      }
+
+      input {
+          width: 100%;
+          padding: 8px;
+          box-sizing: border-box;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      button {
+          background-color: red;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+      }
+
+      button:hover {
+          background-color: #cc0000; /* Couleur plus intense au survol */
+      }
+  </style>
+</head>
+{% extends 'layout.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %} 
+
+<h1>Connexion</h1>
+<form method="post" action="/connexion">
+  <div class="champ">
+    <label for="pseudo">Pseudo : </label>
+    <input type="text" name="pseudo">
+  </div>
+  <div class="champ">
+    <label for="pass">Mot de passe:</label>
+    <input type="password" name="pass">
+  </div>
+  <button type="submit">Connexion</button>
+  </div>
+</form>
+
+{% endblock %}

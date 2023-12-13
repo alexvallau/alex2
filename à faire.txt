@@ -1,0 +1,123 @@
+Prison(IDunique,Oblast,Nombre_de_prisonnier,capacitePrison, Spécialité)
+Get
+
+Personne(Nom, Prénom, PrisonAffectée)
+
+hérite de personne: Personnel(IDunique, Prénom, nom, Status)
+
+
+Hérite de personne: Prisonnier(IDunique, Prénom, nom, type_de_peine, Collaborateur)
+getPrisonnier()
+setPrisonnier()
+tuerPrisonnier()
+Libérer un prisonnier()
+Changer un prisonnier de prison()
+
+
+Peine(Motif, DAte_entree, Date_sortie)
+
+-----------------------------------------------------------------------
+                            Creation des tables
+-----------------------------------------------------------------------
+
+CREATE TABLE prison
+(
+id INT PRIMARY KEY NOT NULL,
+name_prison VARCHAR(200)
+oblast VARCHAR(100),
+number_of_prisonners INT
+capacityPrison INT,
+prison_Type VARCHAR(100)
+)
+
+
+CREATE TABLE prisonners(
+id INT PRIMARY KEY NOT NULL,
+Prénom VARCHAR(100),
+nom VARCHAR(100),
+type_de_peine VARCHAR(100),
+Collaborateur BOOLEAN,
+id 
+)
+
+CREATE TABLE peine(
+id INT PRIMARY KEY NOT NULL,
+id_user INT FOREIGN KEY
+type_de_peine VARCHAR(100),
+Collaborateur BOOLEAN
+entry_date DATE,
+out_door DATE
+)
+
+
+CREATE TABLE Personnel(
+id INT PRIMARY KEY NOT NULL,
+Prénom VARCHAR(100),
+nom VARCHAR(100),
+Status VARCHAR(100),
+)
+
+
+
+-----------------------------------------------------------------------
+                            Création des requêtes
+-----------------------------------------------------------------------
+
+
+
+Scénario
+
+-Lister tous les prisonniers
+Select * from prisonniers
+
+-lister tous les goulags
+Select name_prison, oblast from prison
+
+-Lister les prisonniers qui ont une certaine date
+
+SELECT prisonners.nom, prisonners.Prénom
+FROM prisonners
+INNER JOIN peine ON prisonners.id = peine.id_user
+WHERE peine.entry_date >= '$VARIABLEENTRYDATE' AND peine.entry_date <= '$VARIABLEENDDATE';
+
+-Changer un prisonnier de goulag
+
+
+-Lister tout le personnel
+Select Prénom,nom from Personnel;
+
+-Lister les prisonnier selon la prison
+
+
+-Lister tous  les morts
+
+
+-Lister les prisonniers libérés
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nom et prénom de l'individu
+Numéro de l'individu
+
+Date de naissance
+Classe/groupe d'appartenance
+faits sur la personne qui pousse le système à s'y interésser
+Photo 
+Commentaires ajoutés par le système
+Niveau de dangerosité
+
+Nom
+
+Type de peine
+

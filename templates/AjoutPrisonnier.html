@@ -1,0 +1,56 @@
+<body>
+    {% extends 'layout.html' %}
+
+    {% block content %}
+    <div style="text-align: center; margin: 20px;">
+        <h1 style="color: red;">Ajouter un Prisonnier</h1>
+
+        <form action="/ajoutPrisonnier" method="post" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
+
+            <label for="prenom" style="display: block; margin-bottom: 5px; color: red;">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+            <label for="nom" style="display: block; margin-bottom: 5px; color: red;">Nom :</label>
+            <input type="text" id="nom" name="nom" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+            <label for="birthday" style="display: block; margin-bottom: 5px; color: red;">Date de naissance :</label>
+            <input type="date" id="birthday" name="birthday" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+            <label for="image1" style="display: block; margin-bottom: 5px; color: red;">Image :</label>
+            <input type="file" id="file" name="file" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+         
+            <select id="type_de_peine" name="type_de_peine" >
+                <option value="Peine lourde"> Peine lourde</option>
+                <option value="Peine légère" selected>Peine légère</option>
+                <option value="Peine à vie">Peine à vie</option>
+             </select>
+
+
+            <label for="collaborateur" style="display: block; margin-bottom: 5px; color: red;">Collaborateur :</label>
+            <input type="checkbox" id="collaborateur" name="collaborateur" style="margin-bottom: 10px;">
+
+            <p> </p>
+            <select id="prison_id" name="prison_id" class="filter-input">
+                <option value="prison_id">Toutes les prisons</option>
+                {% for prison in prisons %}
+                    <option id="prison_id" name="prison_id" value="{{ prison[0] }}">{{ prison[1]}}</option>
+                {% endfor %}
+            </select>
+            <p> </p>
+            <p> </p>
+
+            <label for="birthday" style="display: block; margin-bottom: 5px; color: red;">Date d'entrée :</label>
+            <input type="date"  name="entrydate" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+
+            <label for="birthday" style="display: block; margin-bottom: 5px; color: red;">Date de sortie :</label>
+            <input type="date"  name="exitdate" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+
+            <input type="submit" value="Ajouter" style="background-color: red; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px;">
+        </form>
+    </div>
+
+    {% endblock %}
+</body>

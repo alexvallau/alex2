@@ -1,0 +1,143 @@
+<style>
+    body {
+        background-color: white;
+        color: black;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    img {
+        border: 2px solid red;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        display: block;
+        margin-top: 20px;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .form-container {
+        width: 40%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .declared-dead {
+        background-color: red;
+        color: white;
+    }
+
+    .move-prisoner {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+</head>
+<body>
+
+{% extends 'layout.html' %}
+
+{% block title %}Prisonner information{% endblock %}
+
+{% block content %}
+{% if prisonner %}
+<h1>Informations sur le prisonnier</h1>
+<img src="{{ url_for('static', filename='uploads/' + prisonner.image + '.jpg') }}" width="200" height="200" style="vertical-align: bottom;">
+<p> <strong>Prénom:</strong> {{ prisonner.Prenom }}</p>
+<p> <strong>Nom:</strong> {{ prisonner.Nom }}</p>
+<p> <strong>Date de Naissance:</strong> {{ prisonner.birthday }}</p>
+<p> <strong>Collaborateur:</strong> {{ 'Collabore avec le système' if prisonner.collaborateur else 'Ne collabore pas' }}</p>
+<p> <strong>Prison:</strong> {{ prisonner.prison_id }}</p>
+<p> <strong>Type de peine:</strong> {{ peine.type_de_peine }}</p>
+<p> <strong>Entrée en prison:</strong> {{ peine.entry_date }}</p>
+<p> <strong>Sortie de prison:</strong> {{ peine.out_door }}</p>
+<p> <strong>Est Vivant?:</strong> {{'Oui' if prisonner.isAlive else 'Non' }}</p>
+
+
+
+{% if 'managedPrisonId' in request.cookies %}
+<p>Cookie {{request.cookies['managedPrisonId']}}</p>
+<p><strong>prisonner.prison_id:{{prisonner.prison_id}}</strong></p>
+{% if prisonner.prison_id|int == request.cookies['managedPrisonId']|int  %}
+<p><strong>Action:</strong></p>
+{% endif %}
+
+
+{% endif %}
+
+
+
+
+
+{% if prisonner.prison_id|int == request.cookies.managedPrisonId|int or request.cookies.IsSuperUserAd|int == 1 %}
+
+<div class="action-buttons">
+    <!-- Form for "Déclarer comme mort" -->
+    <div class="form-container">
+        <form method="post" action="/killPrisonner">
+            <h2>Déclarer comme mort</h2>
+            <label for="prisonner_id">Id Number:</label>
+            <input type="text" name="prisonner_id" value="{{ id_prisonnier }}" readonly>
+            <label for="death_date">Date de mort:</label>
+            <input type="date" name="death_date" required>
+            <label for="reason">Raison de la mort:</label>
+            <input type="text" name="reason" required>
+            <button class="declared-dead" type="submit">Déclarer comme mort</button>
+        </form>
+    </div>
+    
+
+    <!-- Form for "Déplacer le prisonnier" -->
+    <div class="form-container">
+        <form method="post" action="/prisonnerChangePrison">
+            <h2>Déplacer le prisonnier</h2>
+            <label for="prisonFilter" class="filter-label">Nom de la prison :</label>
+            <select id="prisonFilter" name="prison" class="filter-input">
+            <option value="">Toutes les prisons</option>
+            {% for prison in prisons %}
+                <option name="prison" value="{{ prison[0] }}">{{ prison[1]}}</option>
+            {% endfor %}
+        </select>
+            <button class="move-prisoner" type="submit">Déplacer le prisonnier</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+</body>
