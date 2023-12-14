@@ -76,7 +76,10 @@ def deconnexion():
 
 @app.route("/index")
 def index():
-    return render_template("index.html")
+
+    prisons=func.Prison.getAllPrisons()
+
+    return render_template("index.html", prisons = prisons)
 
 
 #page qui montre toutes les prisons

@@ -47,13 +47,14 @@ class Administrateur:
 ###############################################################
 class Prison:
      
-    def __init__(self, name_prison, oblast, number_of_prisoners, capacity_prison, prison_type):
+    def __init__(self, name_prison, oblast, number_of_prisoners, capacity_prison, prison_type, long, latt):
         self.name_prison = name_prison
         self.oblast = oblast
         self.number_of_prisoners = number_of_prisoners
         self.capacity_prison = capacity_prison
         self.prison_type = prison_type
-
+        self.longitude = long
+        self.latt = latt
     
     def getAllPrisons():
         conn =connect_database('goodDB.db')
@@ -76,6 +77,8 @@ class Prison:
         cursor.execute(query, (admin_id,))
         result = cursor.fetchone()
         return result
+    
+    
     
 
 ###############################################################
