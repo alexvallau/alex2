@@ -63,6 +63,7 @@
     <div class="user-info">
         {% if 'username' in request.cookies %}
             Welcome, {{ request.cookies['username'] }}!
+            <a href="{{ url_for('deconnexion') }}">déconnexion</a>
         {% else %}
             <a href="{{ url_for('connexion') }}">Login</a>
         {% endif %}

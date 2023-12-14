@@ -15,7 +15,7 @@ import random
 import sqlite3
 import os
 from flask import Flask, render_template, request, redirect, url_for, make_response
-UPLOAD_FOLDER = "C:/Users/arizz/Documents/Master/python/alex2/static/uploads"
+UPLOAD_FOLDER = "C:/Users/aarizzi.JEANLAIN/alex2/static/uploads"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -43,17 +43,32 @@ def connexion():
     if request.method == "POST":
         username = request.form["pseudo"]
         password = request.form["pass"]
-        print("test"+str(func.Administrateur.IsValidUser(username, password)[3]) )
-        isUservalid=func.Administrateur.IsValidUser(username, password)
-        if(isUservalid):
-            isUserSuperAdmin=str(func.Administrateur.IsUserSuperAdmin(username))
-            
-            resp = make_response(render_template("login.html"), 200)
-            resp.set_cookie('username', username)
-            resp.set_cookie('IsSuperUserAd', str(isUserSuperAdmin[1]))
-            resp.set_cookie('managedPrisonId', str(isUservalid[3]))
-            return resp  # Return the response here
+        if(len(username)<1 or len(password)<1):
+            return render_template("login.html", invalidUser=True)
+        #print("test"+str(func.Administrateur.IsValidUser(username, password)[3]) )
+        else:
+                isUservalid=func.Administrateur.IsValidUser(username, password)
+                if(isUservalid):
+                    isUserSuperAdmin=str(func.Administrateur.IsUserSuperAdmin(username))
+                    
+                    resp =  make_response(redirect(url_for("index"), 200))
+                    resp.set_cookie('username', username)
+                    resp.set_cookie('IsSuperUserAd', str(isUserSuperAdmin[1]))
+                    resp.set_cookie('managedPrisonId', str(isUservalid[3]))
+                    return resp  # Return the response here
+                else:
+                    return render_template("login.html", invalidUser=True)
+
     return render_template("login.html")
+
+@app.route("/deconnexion")
+def deconnexion():
+        resp = make_response(redirect(url_for("connexion"), 200))
+        resp.delete_cookie('username')
+        resp.delete_cookie('IsSuperUserAd')
+        resp.delete_cookie('managedPrisonId')
+        return resp
+   
 
 
 

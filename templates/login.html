@@ -62,7 +62,7 @@
 {% block content %} 
 
 <h1>Connexion</h1>
-<form method="post" action="/connexion">
+<form method="post" action="{{url_for('connexion')}}">
   <div class="champ">
     <label for="pseudo">Pseudo : </label>
     <input type="text" name="pseudo">
@@ -73,6 +73,10 @@
   </div>
   <button type="submit">Connexion</button>
   </div>
+  {% if invalidUser %}
+  <div><p style="color: #cc0000;">Username or password is wrong</p></div>
+
+  {% endif %}
 </form>
 
 {% endblock %}
