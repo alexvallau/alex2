@@ -121,9 +121,10 @@ class Prisonnier(Personne):
         # Modifiez la requête pour inclure le nom de la prison en utilisant une jointure
         query = """
         SELECT prisonners.id, prisonners.prenom, prisonners.nom, prisonners.type_de_peine,
-               prisonners.collaborateur, prison.name_prison
+               prisonners.collaborateur, prison.name_prison, peine.entry_date, peine.out_door
         FROM prisonners
         JOIN prison ON prisonners.prison_id = prison.id
+		JOIN peine ON prisonners.id = peine.user_id
         """
         prisonners = cursor.execute(query).fetchall()
         conn.close()  # N'oubliez pas de fermer la connexion après utilisation
@@ -170,7 +171,7 @@ class Prisonnier(Personne):
         query1="UPDATE prisonners SET isAlive = 0 WHERE id = ?"
         cursor.execute(query1, (prisonner_id,))
 
-    def prisonnerChangePrison(prisonner_id, new_prison_id):
+    def prisonnerChangePrison(prisonner_id, new_prison_id, current_prison_id):
 
         conn =connect_database('goodDB.db')
         cursor = conn.cursor()
@@ -178,6 +179,7 @@ class Prisonnier(Personne):
         #change l'id de la prison
         cursor.execute("UPDATE prisonners SET prison_id = ? WHERE id = ?", (new_prison_id, prisonner_id))
 
+        #décrménete la prison dans laquelle il se trouve actuellement
         cursor.execute("UPDATE prison SET number_of_prisonners = number_of_prisonners - 1 WHERE id = ?", (current_prison_id,))
 
         # Decrement the number of prisonners in the new prison

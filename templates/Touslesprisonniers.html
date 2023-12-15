@@ -203,6 +203,8 @@
                         <th>Type de peine</th>
                         <th>Collaborateur</th>
                         <th>Prison</th>
+                        <th>Date entrée</th>
+                        <th>Date sortie</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,6 +215,8 @@
                             <td>{{ prisonnier[3] }}</td>
                             <td>{{ 'Oui' if prisonnier[4] else 'Non' }}</td>
                             <td>{{ prisonnier[5] }}</td>
+                            <td>{{ prisonnier[6] }}</td>
+                            <td>{{ prisonnier[7] }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

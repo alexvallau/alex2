@@ -106,17 +106,18 @@ def killPrisonner():
         death_date = request.form['death_date']
         death_reason = request.form['reason']
         func.Prisonnier.killPrisonner(id_prisonnier,death_date, death_reason )
+        return redirect(url_for('Touslesprisonniers'))
 
 
 @app.route("/prisonnerChangePrison", methods=["POST"])
 def prisonnerChangePrison():
     if request.method=="POST":
-        id_prison=request.form['prison']
-        print("dazmojpdazodzdzdz"+id_prison)
-        return id_prison
+        new_id_prison=request.form['prison']
+        prisonner_id=request.form['prisonner_id']
+        current_prison_id=request.form['current_prison']
+        func.Prisonnier.prisonnerChangePrison(prisonner_id, new_id_prison, current_prison_id )
+        return redirect(url_for('Touslesprisonniers'))
 
-
-        
 
 @app.route("/Touslesprisonniers", methods=['GET', 'POST'])
 def Touslesprisonniers():
@@ -163,9 +164,6 @@ def ajoutPrisonnier():
             img_filename = os.path.join(app.config['UPLOAD_FOLDER'], f"{nombre}.jpg")
             uploaded_img.save(img_filename)
         prisonnier = func.Prisonnier(prenom, nom, birthday, type_de_peine, collaborateur, prison_id, nombre, isAlive)
-        
-        
-        
         prisonnier.ajoute_prisonnier()
         lastPrisonnerId=func.Prisonnier.getLastPrisonnerId()
         peine=func.Peine(lastPrisonnerId,type_de_peine,entrydate, exitdate)

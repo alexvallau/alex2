@@ -118,6 +118,8 @@
     <div class="form-container">
         <form method="post" action="/prisonnerChangePrison">
             <h2>Déplacer le prisonnier</h2>
+            <input hidden type="text" name="prisonner_id" value="{{ id_prisonnier }}" readonly>
+            <input hidden type="text" name="current_prison" value="{{ prisonner.prison_id }}" readonly>
             <label for="prisonFilter" class="filter-label">Nom de la prison :</label>
             <select id="prisonFilter" name="prison" class="filter-input">
             <option value="">Toutes les prisons</option>
