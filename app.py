@@ -157,7 +157,7 @@ def ajoutPrisonnier():
         nombre=random.randint(0,46354354113)
             # Obtient le fichier téléchargé depuis la requête
         uploaded_img = request.files['file']
-
+    #test
             # Vérifie si le nom du fichier est valide (évite les injections)
         if uploaded_img.filename != '':
                 # Déplace le fichier téléchargé dans le dossier UPLOAD_FOLDER
