@@ -6,12 +6,29 @@
     <title>Liste des prisonniers</title>
     <style>
         /* Assurez-vous d'avoir une hauteur définie pour le conteneur de la carte */
-        #map { height: 500px; }
-        /* Ajoutez une marge à la colonne pour l'espace entre les colonnes */
-        .colAlex { margin-bottom: 20px;   float: left;width: 50%;}
-        .rowAlex:after {content: "";
-  display: table;
-  clear: both;}
+        #map { height: 1000px; }
+    /* Ajoutez une marge à la colonne pour l'espace entre les colonnes */
+    .colAlex {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box; /* Assure que la largeur inclut le padding */
+    float: left;
+}
+
+#prison-info-container {
+    text-align: center;
+}
+
+#prison-info-container img {
+    max-width: 100%; /* Garantit que l'image ne dépasse pas la largeur du conteneur */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#prison-info-container p {
+    font-size: 18px;
+    line-height: 1.5;
+}
         
     </style>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -34,7 +51,7 @@
     <!-- Diviser l'espace en deux colonnes -->
     <div class="colAlex" id="map"></div>
     <div class="colAlex" id="prison-info-container">
-        <!-- Les informations sur la prison seront chargées ici -->
+       
     </div>
 </div>
 
@@ -65,7 +82,9 @@
                     success: function (data) {
                         // Mettre à jour la colonne de droite avec les informations de la prison
                         // Les données retournées sont un tableau, vous devez accéder aux éléments par index
-                        $('#prison-info-container').html( '<img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' +data[8]+'.jpg" >' +'<br>'+'<p>Nom: ' + data[1] + '</p><p> Oblast: ' + data[2] + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' + + '</p><p>Type de prison: ' + data[5] + '</p>');
+                        $('#prison-info-container').html( '<img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' 
+                        +data[8]+'.jpg" >' +'<br>'+'<p>Nom: ' + data[1] + '</p><p> Oblast: ' + data[2] 
+                        + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' + + '</p><p>Type de prison: ' + data[5] + '</p>');
                     }
                 });
             });
