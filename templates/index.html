@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des prisonniers</title>
     <style>
-          #map { height:680px; }
+        /* Assurez-vous d'avoir une hauteur définie pour le conteneur de la carte */
+        #map { height: 500px; }
+        /* Ajoutez une marge à la colonne pour l'espace entre les colonnes */
+        .colAlex { margin-bottom: 20px;   float: left;width: 50%;}
+        .rowAlex:after {content: "";
+  display: table;
+  clear: both;}
+        
     </style>
-     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <!-- Ajoutez la bibliothèque jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -20,13 +29,14 @@
 
 {% block title %}Liste des prisonniers{% endblock %}
 
-
 {% block content %}
-
-
-
-
-<div id="map"></div>
+<div class="rowAlex">
+    <!-- Diviser l'espace en deux colonnes -->
+    <div class="colAlex" id="map"></div>
+    <div class="colAlex" id="prison-info-container">
+        <!-- Les informations sur la prison seront chargées ici -->
+    </div>
+</div>
 
 <script>
     var map = L.map('map').setView([60.562957, 93.332032], 3);
@@ -45,15 +55,32 @@
                 radius: 150000
             }).addTo(map);
 
-            prisonCircle.bindPopup("<strong>{{ prison[2] }}</strong><br>Places disponibles{{ prison[4] }}");
+            // Ajouter un gestionnaire d'événements pour chaque cercle
+            prisonCircle.on('click', function () {
+                var prisonId = {{ prison[0] }};
+                // Utiliser Ajax pour récupérer les informations de la prison
+                $.ajax({
+                    url: '/get_prison_info/' + prisonId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Mettre à jour la colonne de droite avec les informations de la prison
+                        // Les données retournées sont un tableau, vous devez accéder aux éléments par index
+                        $('#prison-info-container').html( '<img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' +data[8]+'.jpg" >' +'<br>'+'<p>Nom: ' + data[1] + '</p><p> Oblast: ' + data[2] + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' + + '</p><p>Type de prison: ' + data[5] + '</p>');
+                    }
+                });
+            });
+
+            // Ajouter une popup pour chaque cercle
+            prisonCircle.bindPopup("<strong>{{ prison[2] }}</strong><br>Places disponibles: {{ prison[8] }}");
         {% endfor %}
     {% else %}
         // Aucune prison trouvée.
         var noPrisonPopup = L.popup().setLatLng([60.562957, 93.332032])
-                                      .setContent('<p>Aucune prison trouvée.</p>')
-                                      .openOn(map);
+            .setContent('<p>Aucune prison trouvée.</p>')
+            .openOn(map);
     {% endif %}
-
 </script>
 
- {% endblock %}
+{% endblock %}
+</body>
+</html>

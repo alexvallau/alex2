@@ -78,6 +78,14 @@ class Prison:
         result = cursor.fetchone()
         return result
     
+    def getPrisonInfoFromId(prison_id):
+        conn=connect_database('goodDB.db')
+        cursor = conn.cursor()
+        query = "SELECT * FROM prison WHERE id = ?"
+        cursor.execute(query, (prison_id,))
+        result = cursor.fetchone()
+        return result
+    
     
     
 

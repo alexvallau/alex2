@@ -14,7 +14,7 @@ import fonctions as stp
 import random
 import sqlite3
 import os
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 UPLOAD_FOLDER = "C:/Users/aarizzi.JEANLAIN/alex2/static/uploads"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
@@ -80,6 +80,15 @@ def index():
     prisons=func.Prison.getAllPrisons()
 
     return render_template("index.html", prisons = prisons)
+
+
+@app.route('/get_prison_info/<int:prison_id>')
+def get_prison_info(prison_id):
+    # Code pour récupérer les informations de la prison en fonction de l'ID
+    prison_info = func.Prison.getPrisonInfoFromId(prison_id)
+    print(jsonify(prison_info))  # Assurez-vous d'avoir une méthode pour récupérer une prison par ID
+    return jsonify(prison_info)
+
 
 
 #page qui montre toutes les prisons
