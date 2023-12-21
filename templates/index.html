@@ -6,7 +6,7 @@
     <title>Liste des prisonniers</title>
     <style>
         /* Assurez-vous d'avoir une hauteur définie pour le conteneur de la carte */
-        #map { height: 1000px; }
+        #map { height: 800px; }
     /* Ajoutez une marge à la colonne pour l'espace entre les colonnes */
     .colAlex {
     width: 50%;
@@ -84,13 +84,13 @@
                         // Les données retournées sont un tableau, vous devez accéder aux éléments par index
                         $('#prison-info-container').html( '<img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' 
                         +data[8]+'.jpg" >' +'<br>'+'<p>Nom: ' + data[1] + '</p><p> Oblast: ' + data[2] 
-                        + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' + + '</p><p>Type de prison: ' + data[5] + '</p>');
+                        + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' +  '</p><p> Type de prison: ' + data[5] + '</p>');
                     }
                 });
             });
 
             // Ajouter une popup pour chaque cercle
-            prisonCircle.bindPopup("<strong>{{ prison[2] }}</strong><br>Places disponibles: {{ prison[8] }}");
+            prisonCircle.bindPopup("<strong>{{ prison[2] }}</strong>");
         {% endfor %}
     {% else %}
         // Aucune prison trouvée.

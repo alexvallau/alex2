@@ -84,9 +84,8 @@ def index():
 
 @app.route('/get_prison_info/<int:prison_id>')
 def get_prison_info(prison_id):
-    # Code pour récupérer les informations de la prison en fonction de l'ID
     prison_info = func.Prison.getPrisonInfoFromId(prison_id)
-    print(jsonify(prison_info))  # Assurez-vous d'avoir une méthode pour récupérer une prison par ID
+    print(jsonify(prison_info))  
     return jsonify(prison_info)
 
 
