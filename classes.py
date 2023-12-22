@@ -126,7 +126,7 @@ class Prisonnier(Personne):
     def getAllPrisonners():
         conn = connect_database('goodDB.db')
         cursor = conn.cursor()
-        # Modifiez la requête pour inclure le nom de la prison en utilisant une jointure
+        
         query = """
         SELECT prisonners.id, prisonners.prenom, prisonners.nom, prisonners.type_de_peine,
                prisonners.collaborateur, prison.name_prison, peine.entry_date, peine.out_door
@@ -135,7 +135,7 @@ class Prisonnier(Personne):
 		JOIN peine ON prisonners.id = peine.user_id
         """
         prisonners = cursor.execute(query).fetchall()
-        conn.close()  # N'oubliez pas de fermer la connexion après utilisation
+        conn.close()  
         return prisonners
     
     ##Renvoi les prisonniers qui correspondent à une certaine prison
