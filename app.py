@@ -141,9 +141,9 @@ def Touslesprisonniers():
             return render_template("Touslesprisonniers.html", prisonniers=filteredPrisonners, prisons=prisons)
         else:
             prisonniers=func.Prisonnier.getAllPrisonners()
-            print(jsonify(prisons))
-            #return render_template("Touslesprisonniers.html", prisonniers=prisonniers, prisons=prisons)
-            return jsonify(prisonniers)
+            print(prisonniers)
+            return render_template("Touslesprisonniers.html", prisonniers=prisonniers, prisons=prisons)
+            #return jsonify(prisonniers)
 
 
 #ajouter un prisonnier depuis un formulaire:

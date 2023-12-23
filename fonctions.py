@@ -196,3 +196,10 @@ def lister_liberes(conn):
         WHERE peine.out_door IS NOT NULL
     """)
     return cursor.fetchall()
+
+
+
+
+
+hi=func.Prisonnier.filterPrisonnersCrossedFilter("ALexandre", "A vie", "default", "default", "default", "default", "Yes")
+print(hi)

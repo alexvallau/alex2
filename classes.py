@@ -6,6 +6,8 @@ Created on Mon Nov 27 14:48:03 2023
 """
 import sqlite3
 
+from datetime import datetime
+
 def connect_database(database_path):
     return sqlite3.connect(database_path)
 
@@ -129,7 +131,7 @@ class Prisonnier(Personne):
         
         query = """
         SELECT prisonners.id, prisonners.prenom, prisonners.nom, prisonners.type_de_peine,
-               prisonners.collaborateur, prison.name_prison, peine.entry_date, peine.out_door
+               prisonners.collaborateur, prison.name_prison, peine.entry_date, peine.out_door, prisonners.isAlive
         FROM prisonners
         JOIN prison ON prisonners.prison_id = prison.id
 		JOIN peine ON prisonners.id = peine.user_id
@@ -137,6 +139,82 @@ class Prisonnier(Personne):
         prisonners = cursor.execute(query).fetchall()
         conn.close()  
         return prisonners
+    
+    def filterPrisonnersCrossedFilter(prenom, type_de_peine, collaborateur, prison_name, entry_date, out_door, isAlive):
+           #on récupère ici tous les prisonniers
+           prisonnersRawData=Prisonnier.getAllPrisonners()
+           #filtered Prisonner
+           filteredPrisonners=[]
+           #default filter
+           defaultFilters={'prenom':"default", 'type_de_peine':"default", 'collaborateur':"default", 'prison_name':"default", 'entry_date':"default", 'date':"default", 'isAlive':"default"}
+           userFilter={'prenom':prenom, 'type_de_peine':type_de_peine, 'collaborateur':collaborateur, 'prison_name':prison_name, 'entry_date':entry_date, 'out_door':out_door, 'isAlive':isAlive}
+           #On créé un dictionnaire avec les filtres qui ne sont pas par défaut
+           appliedFilters = {key: value for key, value in userFilter.items() if value != defaultFilters.get(key, "default")}
+           
+           for prisonner in prisonnersRawData:
+               
+               for key, value in appliedFilters.items():
+                   
+                   if key == "prenom":
+                       if str(prisonner[1]) == str(value):
+                           #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
+                           #print(prisonner[1] )
+                           
+                           continue
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+                   if key == "type_de_peine":
+                       if prisonner[3]== value:
+                           #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
+                           continue
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+
+                   if key == "collaborateur":
+                       if prisonner[4]== value:
+                           #Si le prisonnier est un collan
+                           continue
+                       else:
+                           break
+                   if key == "prison_name":
+                       if prisonner[5]== value:
+                           #Si la prison est la prison filtrée
+                           continue
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+                   if key == "entry_date":
+                       if datetime.strptime(prisonner[6], '%Y-%m-%d') == value:
+                           #Si la prison est la prison filtrée
+                           continue
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+                   if key == "out_date":
+                       if datetime.strptime(prisonner[7], '%Y-%m-%d') == value:
+                           #Si la prison est la prison filtrée
+                           continue
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+                   if key == "isAlive":
+                       if prisonner[8]== value:
+                           #Si la prison est la prison filtrée
+                           filteredPrisonners.append(prisonner)
+                       else:
+                           #Sinon, je break mon filtre
+                           break
+                       #Et je continue dans mes prisonniers
+                   else:
+                       return f"No fucking key {key}"
+                   filteredPrisonners.append(prisonner)
+    #Je continue dans mes prisonniers
+               continue
+           
+           return filteredPrisonners  
+        
     
     ##Renvoi les prisonniers qui correspondent à une certaine prison
     def getPrisonnersFilteredByPrison(prisonName):
