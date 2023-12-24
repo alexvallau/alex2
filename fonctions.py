@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon Nov 27 11:39:04 2023
@@ -201,5 +202,5 @@ def lister_liberes(conn):
 
 
 
-hi=func.Prisonnier.filterPrisonnersCrossedFilter("ALexandre", "A vie", "default", "default", "default", "default", "Yes")
+hi=func.Prisonnier.filterPrisonnersCrossedFilter("ALexandre", "A vie", "default", "default", "default", "default", "1")
 print(hi)

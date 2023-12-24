@@ -150,7 +150,7 @@ class Prisonnier(Personne):
            userFilter={'prenom':prenom, 'type_de_peine':type_de_peine, 'collaborateur':collaborateur, 'prison_name':prison_name, 'entry_date':entry_date, 'out_door':out_door, 'isAlive':isAlive}
            #On créé un dictionnaire avec les filtres qui ne sont pas par défaut
            appliedFilters = {key: value for key, value in userFilter.items() if value != defaultFilters.get(key, "default")}
-           
+           print(appliedFilters)
            for prisonner in prisonnersRawData:
                
                for key, value in appliedFilters.items():
@@ -159,7 +159,7 @@ class Prisonnier(Personne):
                        if str(prisonner[1]) == str(value):
                            #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
                            #print(prisonner[1] )
-                           
+                           print("Je suis dans key==prenom")
                            continue
                        else:
                            #Sinon, je break mon filtre
@@ -167,6 +167,7 @@ class Prisonnier(Personne):
                    if key == "type_de_peine":
                        if prisonner[3]== value:
                            #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
+                           print("Je suis dans type de peine")
                            continue
                        else:
                            #Sinon, je break mon filtre
@@ -199,10 +200,12 @@ class Prisonnier(Personne):
                        else:
                            #Sinon, je break mon filtre
                            break
+                   print("Je print la key")
                    if key == "isAlive":
-                       if prisonner[8]== value:
+                       print("Je suis dans is Alive et prisonner8 vaut"+str(prisonner[8])+"Value vaut"+str(value))
+                       if str(prisonner[8])== value:
+                           print("Je suis dans is Alive")
                            #Si la prison est la prison filtrée
-                           filteredPrisonners.append(prisonner)
                        else:
                            #Sinon, je break mon filtre
                            break
