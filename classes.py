@@ -204,7 +204,7 @@ class Prisonnier(Personne):
                            #Sinon, je break mon filtre
                            break
                    if key == "entry_date":
-                       if datetime.strptime(prisonner[6], '%YYYY-%mm-%dd') == value:
+                       if str(prisonner[6]) == value:
                            hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
                            #Si la prison est la prison filtrée
                            if(hadAllFiltersBeenVisited==len(appliedFilters)):
@@ -215,7 +215,7 @@ class Prisonnier(Personne):
                            #Sinon, je break mon filtre
                            break
                    if key == "out_date":
-                       if datetime.strptime(prisonner[7], '%YYYY-%mm-%dd') == value:
+                       if str(prisonner[7]) == value:
                            hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
                            #Si la prison est la prison filtrée
                            if(hadAllFiltersBeenVisited==len(appliedFilters)):

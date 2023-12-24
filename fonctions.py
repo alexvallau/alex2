@@ -191,5 +191,5 @@ def lister_liberes(conn):
 
 
 
-hi=func.Prisonnier.filterPrisonnersCrossedFilter("default", "default", "default", "Belomorstroy", "default", "default", "default")
+hi=func.Prisonnier.filterPrisonnersCrossedFilter("default", "default", "default", "default", "2023-11-01", "default", "default")
 print(hi)

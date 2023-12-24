@@ -147,11 +147,11 @@ def Touslesprisonniers():
 
         test=func.Prisonnier.filterPrisonnersCrossedFilter("default", type_de_peine, collaborateur, nom_ville, entry_date, out_date, isAlive)
         print(test)
-        print("LA peine PAR DEFAUT EST"+type_de_peine)
+        #print("LA mzfEMOIFNEVÔMNEVÔZmvnzoVJNZOMnomlneomnmzeùpovzcnEDAte EST"+entry_date)
         #return nom_ville
-        if(nom_ville != "default"):
+        if(nom_ville != "default" or entry_date != "default" or out_date != "default" or isAlive != "default" or type_de_peine!= "default" or collaborateur != "default"):
          #   return nom_ville
-            filteredPrisonners=func.Prisonnier.getPrisonnersFilteredByPrison(nom_ville)
+            #filteredPrisonners=func.Prisonnier.getPrisonnersFilteredByPrison(nom_ville)
             #print(vars(filteredPrisonners))
             return render_template("Touslesprisonniers.html", prisonniers=test, prisons=prisons)
         else:
