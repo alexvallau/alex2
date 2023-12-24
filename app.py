@@ -85,7 +85,7 @@ def index():
 @app.route('/get_prison_info/<int:prison_id>')
 def get_prison_info(prison_id):
     prison_info = func.Prison.getPrisonInfoFromId(prison_id)
-    print(jsonify(prison_info))  
+    #print(jsonify(prison_info))  
     return jsonify(prison_info)
 
 
@@ -132,16 +132,31 @@ def Touslesprisonniers():
     #Pour le résultat du filtre
     if request.method=="GET":
         prisons=func.Prison.getAllPrisons()
-        nom_ville=request.args.get('prisonFilter', default="", type=str)
+        nom_ville=request.args.get('prisonFilter', default="default", type=str)
+        entry_date=request.args.get('entryDateFilter', default="default", type=str)
+        out_date=request.args.get('outDoorDateFilter', default="default", type=str)
+        isAlive=request.args.get('isAlive', default="default", type=str)
+        type_de_peine=request.args.get('type_de_peine', default="default", type=str)
+        collaborateur=request.args.get('collaborateur', default="default", type=str)
+
+        if(str(entry_date)=="0001-01-01"):
+            entry_date="default"
+        if(str(out_date)=="0001-01-01"):
+            out_date="default"
+
+
+        test=func.Prisonnier.filterPrisonnersCrossedFilter("default", type_de_peine, collaborateur, nom_ville, entry_date, out_date, isAlive)
+        print(test)
+        print("LA peine PAR DEFAUT EST"+type_de_peine)
         #return nom_ville
-        if(nom_ville != ""):
+        if(nom_ville != "default"):
          #   return nom_ville
             filteredPrisonners=func.Prisonnier.getPrisonnersFilteredByPrison(nom_ville)
             #print(vars(filteredPrisonners))
-            return render_template("Touslesprisonniers.html", prisonniers=filteredPrisonners, prisons=prisons)
+            return render_template("Touslesprisonniers.html", prisonniers=test, prisons=prisons)
         else:
             prisonniers=func.Prisonnier.getAllPrisonners()
-            print(prisonniers)
+            #print(prisonniers)
             return render_template("Touslesprisonniers.html", prisonniers=prisonniers, prisons=prisons)
             #return jsonify(prisonniers)
 

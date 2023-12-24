@@ -174,30 +174,46 @@
     <form action="#" method="get">
         <label for="prisonFilter" class="filter-label">Nom de la prison :</label>
         <select id="prisonFilter" name="prisonFilter" class="filter-input">
-            <option value="">Toutes les prisons</option>
+            <option value="default">Toutes les prisons</option>
             {% for prison in prisons %}
                 <option value="{{ prison[1] }}">{{ prison[1]}}</option>
             {% endfor %}
         </select>
 
-        <label for="entryDateFilter" class="filter-label">Date d'entrée :</label>
-        <input type="date" id="entryDateFilter" name="entryDateFilter" class="filter-input">
+        <label for="entryDateFilter" class="filter-label">Date d'entrée(Let it for default) :</label>
+        <input type="date" id="entryDateFilter" name="entryDateFilter" class="filter-input" value="0001-01-01">
 
-        <label for="outDoorDateFilter" class="filter-label">Date de sortie :</label>
-        <input type="date" id="outDoorDateFilter" name="outDoorDateFilter" class="filter-input">
+        <label for="outDoorDateFilter" class="filter-label">Date de sortie(Let it for default) :</label>
+        <input type="date" id="outDoorDateFilter" name="outDoorDateFilter" class="filter-input" value="0001-01-01">
 
 
-        <label for="Birthday" class="filter-label">Date de naissance</label>
-        <input type="date" id="birthday" name="birthday" class="filter-input">
+        <label for="birthday" class="filter-label">Date de naissance</label>
+        <input type="date" id="birthday" name="birthday" class="filter-input" value="0001-01-01">
 
-        <select>
-            <option value="">Collaborateur</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
+
+        <label for="type_de_peine">Type de peine :</label>
+        <select id="type_de_peine" name="type_de_peine">
+            <option value="default">Type de peine</option>
+            <option value="Peine légère">Légère</option>
+            <option value="Peine modérée">Mesurée</option>
+            <option value="Peine sévère">Lourde</option>
+        </select>
+
+        <label for="collaborateur"></label>
+        <select id="collaborateur" name="collaborateur">
+            <option value="default">Collaborateur</option>
+            <option value="1">Oui</option>
+            <option value="0">Non</option>
+        </select>
+
+        <label for="isAlive"></label>
+        <select id="isAlive" name="isAlive">
+            <option value="default">Est en vie</option>
+            <option value="1">Oui</option>
+            <option value="0">Non</option>
         </select>
         <br>
-        <br>
-        <br>
+      
         <br>
 
         <button type="submit">Filtrer</button>

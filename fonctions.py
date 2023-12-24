@@ -107,17 +107,6 @@ def getPrisonnersFilteredByPrison(prisonName):
     return result
 
 
-#print(hallo)
-#Hi=func.Prisonnier.killPrisonner(10, "10/11/12", "Trahison")
-
-
-
-
-
-   
-#test=getIdFromPrisonName("Prison 2")
-#print(test)
-
 # Fonction pour lister tous les goulags
 def lister_goulags():
     conn =connect_database('goodDB.db')
@@ -202,5 +191,5 @@ def lister_liberes(conn):
 
 
 
-hi=func.Prisonnier.filterPrisonnersCrossedFilter("ALexandre", "A vie", "default", "default", "default", "default", "1")
+hi=func.Prisonnier.filterPrisonnersCrossedFilter("default", "default", "default", "Belomorstroy", "default", "default", "default")
 print(hi)

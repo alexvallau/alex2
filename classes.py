@@ -150,16 +150,22 @@ class Prisonnier(Personne):
            userFilter={'prenom':prenom, 'type_de_peine':type_de_peine, 'collaborateur':collaborateur, 'prison_name':prison_name, 'entry_date':entry_date, 'out_door':out_door, 'isAlive':isAlive}
            #On créé un dictionnaire avec les filtres qui ne sont pas par défaut
            appliedFilters = {key: value for key, value in userFilter.items() if value != defaultFilters.get(key, "default")}
-           print(appliedFilters)
+           print(len(appliedFilters))
+           hadAllFiltersBeenVisited=0
            for prisonner in prisonnersRawData:
-               
+               hadAllFiltersBeenVisited=0
                for key, value in appliedFilters.items():
-                   
+                   if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                    if key == "prenom":
                        if str(prisonner[1]) == str(value):
                            #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
                            #print(prisonner[1] )
-                           print("Je suis dans key==prenom")
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            #Sinon, je break mon filtre
@@ -168,34 +174,53 @@ class Prisonnier(Personne):
                        if prisonner[3]== value:
                            #Si le prénom de mon prisonnier vaut la valeur, alors je continue de boucler dans mes filtres
                            print("Je suis dans type de peine")
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            #Sinon, je break mon filtre
                            break
 
                    if key == "collaborateur":
-                       if prisonner[4]== value:
-                           #Si le prisonnier est un collan
+                       if str(prisonner[4])== value:
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            break
                    if key == "prison_name":
                        if prisonner[5]== value:
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
                            #Si la prison est la prison filtrée
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            #Sinon, je break mon filtre
                            break
                    if key == "entry_date":
-                       if datetime.strptime(prisonner[6], '%Y-%m-%d') == value:
+                       if datetime.strptime(prisonner[6], '%YYYY-%mm-%dd') == value:
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
                            #Si la prison est la prison filtrée
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            #Sinon, je break mon filtre
                            break
                    if key == "out_date":
-                       if datetime.strptime(prisonner[7], '%Y-%m-%d') == value:
+                       if datetime.strptime(prisonner[7], '%YYYY-%mm-%dd') == value:
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
                            #Si la prison est la prison filtrée
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            continue
                        else:
                            #Sinon, je break mon filtre
@@ -204,6 +229,10 @@ class Prisonnier(Personne):
                    if key == "isAlive":
                        print("Je suis dans is Alive et prisonner8 vaut"+str(prisonner[8])+"Value vaut"+str(value))
                        if str(prisonner[8])== value:
+                           hadAllFiltersBeenVisited=hadAllFiltersBeenVisited+1
+                           if(hadAllFiltersBeenVisited==len(appliedFilters)):
+                            print("Tous les filtres ont été visités")
+                            filteredPrisonners.append(prisonner)
                            print("Je suis dans is Alive")
                            #Si la prison est la prison filtrée
                        else:
@@ -212,7 +241,6 @@ class Prisonnier(Personne):
                        #Et je continue dans mes prisonniers
                    else:
                        return f"No fucking key {key}"
-                   filteredPrisonners.append(prisonner)
     #Je continue dans mes prisonniers
                continue
            
