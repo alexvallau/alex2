@@ -7,7 +7,7 @@ This is a temporary script file.
 
 
 
-
+from colorama import Fore, Back, Style
 #import overpy
 import classes as func
 import fonctions as stp
@@ -131,6 +131,7 @@ def prisonnerChangePrison():
 def Touslesprisonniers():
     #Pour le résultat du filtre
     if request.method=="GET":
+        prenom=request.args.get('prenom', default="default",type=str )
         prisons=func.Prison.getAllPrisons()
         nom_ville=request.args.get('prisonFilter', default="default", type=str)
         entry_date=request.args.get('entryDateFilter', default="default", type=str)
@@ -138,18 +139,25 @@ def Touslesprisonniers():
         isAlive=request.args.get('isAlive', default="default", type=str)
         type_de_peine=request.args.get('type_de_peine', default="default", type=str)
         collaborateur=request.args.get('collaborateur', default="default", type=str)
-
+        
         if(str(entry_date)=="0001-01-01"):
             entry_date="default"
         if(str(out_date)=="0001-01-01"):
             out_date="default"
 
+        if str(prenom)=="":
+            prenom="default"
+        print(Fore.RED+"Le prénom est "+prenom+"test")
+        print(Fore.RED+"Le prénom est"+prenom+"test")
+        print(Fore.RED+"Le prénom est"+prenom+"test")
+        print(Fore.RED+"Le prénom est"+prenom+"test")
+        print(Fore.RED+"Le prénom est"+prenom+"test")
 
-        test=func.Prisonnier.filterPrisonnersCrossedFilter("default", type_de_peine, collaborateur, nom_ville, entry_date, out_date, isAlive)
+        test=func.Prisonnier.filterPrisonnersCrossedFilter(prenom, type_de_peine, collaborateur, nom_ville, entry_date, out_date, isAlive)
         print(test)
         #print("LA mzfEMOIFNEVÔMNEVÔZmvnzoVJNZOMnomlneomnmzeùpovzcnEDAte EST"+entry_date)
         #return nom_ville
-        if(nom_ville != "default" or entry_date != "default" or out_date != "default" or isAlive != "default" or type_de_peine!= "default" or collaborateur != "default"):
+        if(prenom != "default" or nom_ville != "default" or entry_date != "default" or out_date != "default" or isAlive != "default" or type_de_peine!= "default" or collaborateur != "default"):
          #   return nom_ville
             #filteredPrisonners=func.Prisonnier.getPrisonnersFilteredByPrison(nom_ville)
             #print(vars(filteredPrisonners))
