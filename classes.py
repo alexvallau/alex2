@@ -123,7 +123,13 @@ class Prisonnier(Personne):
         conn.close()
         return prisonnier
 
-
+    def updatePrisonner(id_prisonnier, nom, prenom, date_naissance):
+        conn=connect_database('goodDB.db')
+        cursor = conn.cursor()
+        query = "UPDATE prisonners SET nom =?, prenom =?, birthday =? WHERE id = ?"
+        cursor.execute(query, (nom, prenom, date_naissance, id_prisonnier))
+        conn.commit()
+        conn.close()
     
     def getAllPrisonners():
         conn = connect_database('goodDB.db')
@@ -281,12 +287,35 @@ class Prisonnier(Personne):
             # Fermer la connexion dans tous les cas (même en cas d'exception)
             conn.close()
 
+
+
+    def getPrisonIdFromPrisonner(prisonner_id):
+        conn=connect_database('goodDB.db')
+        cursor = conn.cursor()
+        query = "SELECT prison_id FROM prisonners WHERE id = ?"
+        cursor.execute(query,(prisonner_id))
+        result = cursor.fetchone()
+        conn.close()
+        return result[0]
+
+
+
+
     def killPrisonner(prisonner_id, date, reason):
         conn =connect_database('goodDB.db')
         cursor = conn.cursor()
 
+        #décrémente de 1 le nombre de prisonniers dans la prison
+        prison_id=Prisonnier.getPrisonIdFromPrisonner(prisonner_id)
+        cursor.execute("UPDATE prison SET number_of_prisonners = number_of_prisonners - 1 WHERE id = ?", (prison_id,))
+
+        
         query1="UPDATE prisonners SET isAlive = 0 WHERE id = ?"
+        query2="INSERT INTO morts (id_prisonner, death_date, REASON) VALUES (?,?,?)"
         cursor.execute(query1, (prisonner_id,))
+        cursor.execute(query2, (prisonner_id, date, reason))
+        conn.commit()
+        conn.close()
 
     def prisonnerChangePrison(prisonner_id, new_prison_id, current_prison_id):
 

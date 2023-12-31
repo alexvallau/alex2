@@ -70,10 +70,6 @@ def deconnexion():
         return resp
    
 
-
-
-
-
 @app.route("/index")
 def index():
 
@@ -107,12 +103,41 @@ def ConsultPrisonner():
         
         return render_template("prisonnerInformation.html", id_prisonnier=id_prisonnier,prisonner=prisonner, peine=peine, prisons=prisons )
 
+
+@app.route("/changePrisonnerInformation", methods=["POST", "GET"])
+def changePrisonnerInformation():
+    if request.method=="GET":
+        id_prisonnier=request.args.get('id', default="", type=str)
+        prisonner=func.Prisonnier.getPrisonner(id_prisonnier)
+        peine=func.Peine.getPeineFromUserID(id_prisonnier)
+        prisons=func.Prison.getAllPrisons()
+        
+        return render_template("changePrisonnerInformations.html", id_prisonnier=id_prisonnier,prisonner=prisonner, peine=peine, prisons=prisons )
+
+    return render_template("prisonnerInformation.html")
+
+
+@app.route("/changePrisonnerInformation/changeIt", methods=["POST"])
+def changeIt():
+    if request.method=="POST":
+        id_prisonnier=request.form['prisonner_id']
+        nom=request.form['nom']
+        prenom=request.form['prenom']
+        date_naissance=request.form['birthday']
+        
+        print("id prisonner "+id_prisonnier+" nom "+nom+" prenom "+prenom+" date_naissance "+date_naissance)
+        func.Prisonnier.updatePrisonner(id_prisonnier, nom, prenom, date_naissance)
+        #func.Prisonnier.changePrisonnerInformation(id_prisonnier, nom, prenom, date_naissance, lieu_naissance, num_secu, id_prison)
+        return redirect(url_for('Touslesprisonniers'))
+
 @app.route("/killPrisonner", methods=["POST"])
 def killPrisonner():
     if request.method == "POST":
+        
         id_prisonnier = request.form['prisonner_id']
         death_date = request.form['death_date']
         death_reason = request.form['reason']
+        print("id prisonner "+id_prisonnier+" death_date "+death_date+" death_reason "+death_reason)
         func.Prisonnier.killPrisonner(id_prisonnier,death_date, death_reason )
         return redirect(url_for('Touslesprisonniers'))
 
@@ -147,11 +172,7 @@ def Touslesprisonniers():
 
         if str(prenom)=="":
             prenom="default"
-        print(Fore.RED+"Le prénom est "+prenom+"test")
-        print(Fore.RED+"Le prénom est"+prenom+"test")
-        print(Fore.RED+"Le prénom est"+prenom+"test")
-        print(Fore.RED+"Le prénom est"+prenom+"test")
-        print(Fore.RED+"Le prénom est"+prenom+"test")
+        
 
         test=func.Prisonnier.filterPrisonnersCrossedFilter(prenom, type_de_peine, collaborateur, nom_ville, entry_date, out_date, isAlive)
         print(test)

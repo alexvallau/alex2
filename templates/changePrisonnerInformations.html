@@ -1,0 +1,109 @@
+<style>
+    body {
+        background-color: white;
+        color: black;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    img {
+        border: 2px solid red;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        display: block;
+        margin-top: 20px;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .form-container {
+        width: 40%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .declared-dead {
+        background-color: red;
+        color: white;
+    }
+
+    .move-prisoner {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+</head>
+<body>
+
+{% extends 'layout.html' %}
+
+{% block title %}Prisonner information{% endblock %}
+
+{% block content %}
+{% if prisonner %}
+<h1>Informations sur le prisonnier</h1>
+<img src="{{ url_for('static', filename='uploads/' + prisonner.image + '.jpg') }}" width="200" height="200" style="vertical-align: bottom;">
+
+
+
+{% if 'managedPrisonId' in request.cookies %}
+
+
+{% if prisonner.prison_id|int == request.cookies['managedPrisonId']|int or request.cookies['IsSuperUserAd']|int == 1  %}
+
+
+
+
+<form action="/changePrisonnerInformation/changeIt" method="POST">
+    <input hidden type="text" name="prisonner_id" value="{{ id_prisonnier }}" readonly>
+    <input type="text" id="prenom" name="prenom" value="{{ prisonner.Prenom }}">
+    <input type="text" id="nom" name="nom" value="{{ prisonner.Nom }}">
+    <strong>Birthday</strong>
+    <input type="date" id="birthday" name="birthday" placeholder="" value="0001-01-01">
+    
+    <button type="submit" value="Modifier les informations du prisonnier">Changer les informations</button>
+
+
+
+</form>
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+</body>

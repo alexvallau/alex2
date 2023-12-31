@@ -81,9 +81,9 @@
                     type: 'GET',
                     success: function (data) {
                         // Mettre à jour la colonne de droite avec les informations de la prison
-                        // Les données retournées sont un tableau, vous devez accéder aux éléments par index
-                        $('#prison-info-container').html( '<img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' 
-                        +data[8]+'.jpg" >' +'<br>'+'<p>Nom: ' + data[1] + '</p><p> Oblast: ' + data[2] 
+                       
+                        $('#prison-info-container').html( '<p><font size=100><strong> ' + data[1] +'</font></strong><br></p><img width="600" height="600" style="vertical-align: bottom"; src="/static/uploads/' 
+                        +data[8]+'.jpg" >' +'<br>'+ '</p><p> Oblast: ' + data[2] 
                         + '</p><p>Nombre de prisonnier: ' + data[3] + '</p>' +  '</p><p> Type de prison: ' + data[5] + '</p>');
                     }
                 });
