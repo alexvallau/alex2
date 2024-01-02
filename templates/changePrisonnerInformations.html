@@ -1,69 +1,33 @@
 <style>
-    body {
-        background-color: white;
-        color: black;
-        font-family: Arial, sans-serif;
-        margin: 20px;
+       
+
+    label {
+        font-weight: bold;
     }
 
-    p {
-        margin: 10px 0;
-        line-height: 1.5;
-    }
-
-    img {
-        border: 2px solid red;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-        display: block;
-        margin-top: 20px;
-    }
-
-    .action-buttons {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    .form-container {
-        width: 40%;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin: 10px;
-    }
-
-    .form-container label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-container input {
+    input[type="text"],
+    input[type="date"] {
         width: 100%;
         padding: 8px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        box-sizing: border-box; /* Ajustement de la largeur pour inclure le padding */
     }
 
-    .form-container button {
+    button {
         width: 100%;
         padding: 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        background-color: #dd0000; /* Couleur de fond verte */
+        color: white; /* Texte blanc */
+        transition: background-color 0.3s; /* Transition pour un effet de survol */
     }
 
-    .declared-dead {
-        background-color: red;
-        color: white;
-    }
-
-    .move-prisoner {
-        background-color: yellow;
-        color: black;
+    button:hover {
+        background-color: #b41a1a; /* Couleur de fond verte plus foncée au survol */
     }
 </style>
 </head>
@@ -88,9 +52,11 @@
 
 
 
-<form action="/changePrisonnerInformation/changeIt" method="POST">
+<form action="/changePrisonnerInformation/changeIt" method="POST" style="max-width: 400px; margin: left auto;">
     <input hidden type="text" name="prisonner_id" value="{{ id_prisonnier }}" readonly>
+    <strong>Prénom</strong>
     <input type="text" id="prenom" name="prenom" value="{{ prisonner.Prenom }}">
+    <strong>Nom</strong>
     <input type="text" id="nom" name="nom" value="{{ prisonner.Nom }}">
     <strong>Birthday</strong>
     <input type="date" id="birthday" name="birthday" placeholder="" value="0001-01-01">

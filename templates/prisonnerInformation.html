@@ -90,8 +90,7 @@
 
 
 {% if 'managedPrisonId' in request.cookies %}
-<p>Cookie {{request.cookies['managedPrisonId']}}</p>
-<p><strong>prisonner.prison_id:{{prisonner.prison_id}}</strong></p>
+
 {% if prisonner.prison_id|int == request.cookies['managedPrisonId']|int or request.cookies['IsSuperUserAd']|int == 1  %}
 <p><a href="http://localhost:5000/changePrisonnerInformation?id={{ id_prisonnier }}">Changer les informations de ce prisonnier</a></p>
 {% endif %}
@@ -114,7 +113,7 @@
     </div>
     
 
-    <!-- Form for "Déplacer le prisonnier" -->
+    
     <div class="form-container">
         <form method="post" action="/prisonnerChangePrison">
             <h2>Déplacer le prisonnier</h2>

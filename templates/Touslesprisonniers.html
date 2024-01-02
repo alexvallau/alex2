@@ -242,7 +242,7 @@
                 <tbody>
                     {% for prisonnier in prisonniers %}
                         <tr>
-                            <td><a href="http://localhost:5000/ConsultPrisonner?id={{prisonnier[0]}}">{{ prisonnier[1] }}</a></td>
+                            <td><a href="http://localhost:5000/ConsultPrisonner?id={{prisonnier[0]}}">  {{ prisonnier[1] }}</a>{{ '' if prisonnier[8] else '&#x1F480;'|safe }}</td>
                             <td>{{ prisonnier[2] }}</td>
                             <td>{{ prisonnier[3] }}</td>
                             <td>{{ 'Oui' if prisonnier[4] else 'Non' }}</td>
