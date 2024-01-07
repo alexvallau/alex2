@@ -15,7 +15,8 @@ import random
 import sqlite3
 import os
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
-UPLOAD_FOLDER = "C:/Users/aarizzi.JEANLAIN/alex2/static/uploads"
+#UPLOAD_FOLDER = "C:/Users/aarizzi.JEANLAIN/alex2/static/uploads"
+UPLOAD_FOLDER="C:/Users/arizz/Documents/Master/alex2/static/uploads"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

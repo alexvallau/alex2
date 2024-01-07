@@ -279,9 +279,10 @@ class Prisonnier(Personne):
             cursor = conn.cursor()
             # Insérer le prisonnier dans la table prisonners
             cursor.execute("""
-                INSERT INTO prisonners (prenom, nom, birthday ,type_de_peine, collaborateur, prison_id, image)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (self.Prenom, self.Nom,  self.birthday ,self.type_de_peine,self.collaborateur,self.prison_id, self.image))
+                INSERT INTO prisonners (prenom, nom, birthday ,type_de_peine, collaborateur, prison_id, image, isAlive)
+                VALUES (?, ?, ?, ?, ?, ?, ?,?)
+            """, (self.Prenom, self.Nom,  self.birthday ,self.type_de_peine,self.collaborateur,self.prison_id, self.image, self.isAlive))
+            cursor.execute("UPDATE prison SET number_of_prisonners = number_of_prisonners + 1 WHERE id = ?", (self.prison_id,))
             conn.commit()
         finally:
             # Fermer la connexion dans tous les cas (même en cas d'exception)
@@ -293,7 +294,7 @@ class Prisonnier(Personne):
         conn=connect_database('goodDB.db')
         cursor = conn.cursor()
         query = "SELECT prison_id FROM prisonners WHERE id = ?"
-        cursor.execute(query,(prisonner_id))
+        cursor.execute(query,(prisonner_id,))
         result = cursor.fetchone()
         conn.close()
         return result[0]
@@ -325,7 +326,8 @@ class Prisonnier(Personne):
         #change l'id de la prison
         cursor.execute("UPDATE prisonners SET prison_id = ? WHERE id = ?", (new_prison_id, prisonner_id))
 
-        #décrménete la prison dans laquelle il se trouve actuellement
+        #décrménete la prison dans laquelle
+        #  il se trouve actuellement
         cursor.execute("UPDATE prison SET number_of_prisonners = number_of_prisonners - 1 WHERE id = ?", (current_prison_id,))
 
         # Decrement the number of prisonners in the new prison
